@@ -28,10 +28,10 @@ public class TweetService {
 		return mapper.mapListToDomain(tweets);
 	}
 
-	public String createTweet(TweetDomain tweet) {
+	public TweetDomain createTweet(TweetDomain tweet) {
 		tweet.setId(UUID.randomUUID());
 		Tweet tweetResult = repo.save(mapper.map(tweet));
-		return mapper.map(tweetResult).getId().toString();
+		return mapper.map(tweetResult);
 	}
 	
 	/**
