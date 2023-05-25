@@ -20,6 +20,10 @@ spring:
     password: password
     driverClassName: com.mysql.cj.jdbc.Driver
   jpa:
-    show-sql=true
-    spring.jpa.hibernate.ddl-auto = create
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+    hibernate.ddl-auto: update
 #    spring.jpa.database-platform: org.hibernate.dialect.H2Dialect
+
