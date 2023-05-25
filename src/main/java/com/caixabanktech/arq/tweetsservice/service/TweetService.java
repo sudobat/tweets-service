@@ -53,6 +53,7 @@ public class TweetService {
 	}
 	
 	public TweetDomain updateTweet(TweetDomain tweet) {
+		if (tweet.getCreatedAt()==null) tweet.setCreatedAt(new Date());
 		Tweet tweetResult = repo.save(mapper.map(tweet));
 		return mapper.map(tweetResult);
 	}

@@ -1,0 +1,23 @@
+version: '3'
+
+services:
+
+  mysqldb:
+    image: mysql:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: helloworld
+      MYSQL_DATABASE: twitter
+      MYSQL_USER: twitter
+      MYSQL_PASSWORD: 1234
+    ports:
+      - "3306:3306"
+  app:
+    image: docker.io/caixabanktech/tweeter-service:latest
+    restart: on-failure
+    depends_on:
+      - mysqldb
+    environment: 
+      SPRING_PROFILES_ACTIVE: dev
+      MYSQL_HOST: mysqldb
+    ports:
+      - "8080:8080"

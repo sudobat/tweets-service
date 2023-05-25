@@ -2,41 +2,85 @@
 
 ## Descripcio
 
-Micro Servei que permet operar amb tweets
+Micro  Servei  que  permet  operar  amb  tweets
 
-## Taula de continguts 
+## Taula  de  continguts
 
 If your README is long, add a table of contents to make it easy for users to find what they need.
 
-- [Instalacio](#instalacio)
-- [Us](#us)
-- [Credits](#credits)
-- [License](#license)
 
 ## Instalacio
 
+Generar imatge
 
+> mvn spring-boot:build-image -Dspring-boot.build-image.imageName=caixabanktect/tweeter-service
+
+Arrancar imatge micro
+
+> docker run -p 8080:8080 -t docker.io/caixabanktect/tweeter-service:latest
+
+Arrancar imatge apuntant a mysql
+
+> docker run  -e "SPRING_PROFILES_ACTIVE=dev" -p 8080:8080 -t docker.io/caixabanktect/tweeter-service:latest 
+
+Arrancar mysql port 3306
+
+> docker-compose up
+
+Arrancar mysql + micro 
+
+> docker-compose -f docker-compose-all.yml up
+
+Parar 
+
+> docker-compose down
+
+Testing del micro
+
+> mvn verify -DskipIT=false -Dmaven.test.ski
+
+Para validar los tweets
+
+> curl http://localhost:8080/tweets
 
 ## Us
+ 
+Per compilar 
 
-Per compilar: 
+> mvn clean install
 
+Per compilar sense test
 
+> mvn clean install -Dmaven.test.skip
 
-## Credits
+ Per arrancar el servidor
+
+  > mvn spring-boot:run
+
+### Profiles
+
+* default - BBDD en memoria H2
+* dev - BBDD mySql (necesari la imatge docker adicional)
+
+Per arrancar indicant profie (en aquest cas mysql).
+
+>   mvn spring-boot:run -Dspring-boot.run.profiles=dev
+
+## Credits  
 
 Colaboradors
 
-* Marc Alvarez 
-* Carles Bescos
-* Roger Gras
+* Marc  Alvarez
+
+* Carles  Bescos
+
+* Roger  Gras
 
 ## Tests
 
-Per als test de integracion
-
-`mvn verify -DskipIT=false -Dmaven.test.skip`
-
+Per als test de  integracion
+  
+> mvn verify -DskipIT=false -Dmaven.test.skip
 
 
 
