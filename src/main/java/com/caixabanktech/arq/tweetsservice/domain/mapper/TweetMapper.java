@@ -14,7 +14,8 @@ public interface TweetMapper {
 	
 	TweetMapper INSTANCE=Mappers.getMapper(TweetMapper.class);
 
-	TweetDomain map(TweetDomain tweet);
+	Tweet map(TweetDomain tweet);
 	TweetDomain map(Tweet tweet);	
 	List<Tweet> map(List<TweetDomain> tweet);
+	List<TweetDomain> mapListToDomain(List<Tweet> tweet);
 }
