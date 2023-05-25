@@ -1,5 +1,6 @@
 package com.caixabanktech.arq.tweetsservice.controller;
 
+import com.caixabanktech.arq.tweetsservice.domain.TweetDomain;
 import com.caixabanktech.arq.tweetsservice.domain.entity.Tweet;
 import com.caixabanktech.arq.tweetsservice.service.TweetService;
 import org.springframework.data.domain.Page;
@@ -21,20 +22,24 @@ public class TweetsController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Tweet>> getTweets(@RequestParam("page") int page){
+    public ResponseEntity<List<TweetDomain>> getTweets(@RequestParam("page") int page){
 
-        //Page<Tweet> resultPage = tweetService.getTweets(page, 10);
-        return null;
+        List<TweetDomain> resultPage = tweetService.getTweets(page);
+        ResponseEntity<List<TweetDomain>> tweetDomainResponseEntity = new ResponseEntity<List<TweetDomain>>(resultPage, null, HttpStatus.CREATED);
+        return tweetDomainResponseEntity;
     }
 
     @GetMapping("{tweetId}")
     public ResponseEntity<Tweet> getTweet(UUID uuid){
+
         return null;
     }
 
     @PostMapping
-    public ResponseEntity<Tweet> addTweet(Tweet tweet){
-        return null;
+    public ResponseEntity<TweetDomain> addTweet(TweetDomain tweet){
+        TweetDomain tweetDomain = tweetService.createTweet(tweet);
+        ResponseEntity<TweetDomain> tweetDomainResponseEntity = new ResponseEntity<TweetDomain>(tweetDomain, null, HttpStatus.CREATED);
+        return tweetDomainResponseEntity;
     }
 
     @PutMapping("{tweetId}")
