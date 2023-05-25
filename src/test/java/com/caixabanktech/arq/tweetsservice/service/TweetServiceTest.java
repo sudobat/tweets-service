@@ -1,19 +1,20 @@
 package com.caixabanktech.arq.tweetsservice.service;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+
 import java.util.Date;
 import java.util.UUID;
 
-import com.caixabanktech.arq.tweetsservice.domain.TweetDomain;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
 
+import com.caixabanktech.arq.tweetsservice.domain.TweetDomain;
 import com.caixabanktech.arq.tweetsservice.domain.entity.Tweet;
 import com.caixabanktech.arq.tweetsservice.domain.repository.TweetRepository;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @SpringBootTest
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
@@ -24,6 +25,20 @@ public class TweetServiceTest {
 
     @Autowired
     private TweetRepository tweetRepo;	
+    
+    @Test
+    void givenValidUUIDUpdateTweet() {
+		TweetDomain tweet=new TweetDomain("Tweet","PepeUpdate",new Date(),null);	
+		//Create
+		tweet=tweetService.createTweet(tweet);
+		tweet.setAuthor("PepeOtroUpdate");
+		//Update
+		tweetService.updateTweet(tweet);
+		
+		TweetDomain tweet2=tweetService.getTweet(tweet.getId());
+		assertEquals("PepeOtroUpdate",tweet2.getAuthor());
+		
+    }
 	
 	@Test
 	void givenExistentElementDeleteFromDatabaseThenValidate() {
@@ -31,10 +46,25 @@ public class TweetServiceTest {
 		Tweet tweet=new Tweet(uuid,"Tweet","Pepe",new Date());
 		Tweet tweet1=tweetRepo.save(tweet);
 		assertEquals(tweet1,tweet1);
-		assertEquals(tweetRepo.count(),1);
-		tweetService.delete(uuid);
-		
-		assertEquals(tweetRepo.count(),0);
+		assertEquals(1,tweetRepo.count());
+		tweetService.delete(uuid);		
+		assertEquals(0,tweetRepo.count());
+	}
+
+	@Test
+	void giveninValidUUIDThenReturnTweet() {
+		UUID uuid = UUID.randomUUID();
+		UUID uuid1 = UUID.randomUUID();		
+		TweetDomain tweet=new TweetDomain("Tweet","Pepe1",new Date(),uuid);		
+		tweetService.createTweet(tweet);		
+		assertNull(tweetService.getTweet(uuid1));
+	}
+	
+	@Test
+	void givenValidUUIDThenReturnTweet() {
+		TweetDomain tweet=new TweetDomain("Tweet","Pepe1",new Date(),null);		
+		tweet=tweetService.createTweet(tweet);		
+		assertNotNull(tweetService.getTweet(tweet.getId()));
 	}
 	
 	@Test
@@ -64,7 +94,7 @@ public class TweetServiceTest {
 		tweet = new TweetDomain("Tweet5", "Pepe", new Date(), null);
 		tweetService.createTweet(tweet);
 		assertEquals(tweetRepo.count(),5);
-		assertEquals(tweetService.getTweets(0).get(0).getDesc(), "Tweet5");
+		assertEquals(tweetService.getTweets(0,5).get(0).getDesc(), "Tweet5");
 	}
 
 	@Test
@@ -93,8 +123,9 @@ public class TweetServiceTest {
 		tweetService.createTweet(tweet);
 		tweet = new TweetDomain("Tweet12", "Pepe", new Date(), null);
 		tweetService.createTweet(tweet);
-		assertEquals(tweetRepo.count(),12);
-		assertEquals(tweetService.getTweets(1).get(0).getDesc(), "Tweet2");
+		assertEquals(12, tweetRepo.count());
+		assertEquals( "Tweet12",tweetService.getTweets(0,12).get(0).getDesc());
+		assertEquals( "Tweet",tweetService.getTweets(0,12).get(11).getDesc());
 	}
 
 
