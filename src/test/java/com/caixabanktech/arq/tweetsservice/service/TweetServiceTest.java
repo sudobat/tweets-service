@@ -46,8 +46,8 @@ public class TweetServiceTest {
 	@Test
 	void givenATweetCreateElementInDataBase() {
 		TweetDomain tweet = new TweetDomain("Tweet", "Pepe", new Date(), null);
-		String uuid = tweetService.createTweet(tweet);
-		assertNotNull(uuid);
+		TweetDomain tweetResult = tweetService.createTweet(tweet);
+		assertNotNull(tweetResult.getId());
 		assertEquals(tweetRepo.count(),1);
 	}
 
