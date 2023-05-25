@@ -1,0 +1,13 @@
+version: '3'
+
+services:
+
+  mysql-development:
+    image: mysql:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: helloworld
+      MYSQL_DATABASE: twitter
+      MYSQL_USER: twitter
+      MYSQL_PASSWORD: 1234
+    ports:
+      - "3308:3306"
