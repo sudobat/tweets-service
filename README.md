@@ -13,15 +13,19 @@ If your README is long, add a table of contents to make it easy for users to fin
 
 Generar imatge
 
-> mvn spring-boot:build-image -Dspring-boot.build-image.imageName=caixabanktect/tweeter-service
+> mvn spring-boot:build-image -Dspring-boot.build-image.imageName=caixabanktech/tweets-service
+ 
+Alternativa : 
+
+> docker build -t caixabanktech/tweets-service .
 
 Arrancar imatge micro
 
-> docker run -p 8080:8080 -t docker.io/caixabanktect/tweeter-service:latest
+> docker run -p 8080:8080 -t docker.io/caixabanktech/tweets-service:latest
 
 Arrancar imatge apuntant a mysql
 
-> docker run  -e "SPRING_PROFILES_ACTIVE=dev" -p 8080:8080 -t docker.io/caixabanktect/tweeter-service:latest 
+> docker run  -e "SPRING_PROFILES_ACTIVE=dev" -p 8080:8080 -t docker.io/caixabankteh/tweets-service:latest 
 
 Arrancar mysql port 3306
 
@@ -68,17 +72,17 @@ Per arrancar indicant profie (en aquest cas mysql).
 
 ## Credits  
 
-Colaboradors
+Col·laboradors
 
 * Marc  Alvarez
 
-* Carles  Bescos
+* Carles  Bescós
 
 * Roger  Gras
 
 ## Tests
 
-Per als test de  integracion
+Per als test d'integració
   
 > mvn verify -DskipIT=false -Dmaven.test.skip
 
