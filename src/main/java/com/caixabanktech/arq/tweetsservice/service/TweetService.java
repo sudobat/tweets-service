@@ -60,7 +60,7 @@ public class TweetService {
 		}else {
 			Tweet tweetResult=opt.get();
 			tweetResult.setDesc(tweet.getDesc());
-			return mapper.map(repo.save(mapper.map(tweet)));
+			return mapper.map(repo.save(tweetResult));
 		}
 	}
 	
