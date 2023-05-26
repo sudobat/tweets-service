@@ -73,7 +73,8 @@ public class TweetsControllerTest {
 		.when()
 		.get(CONTEXT)
 		.then()		
-		.statusCode(HttpStatus.SC_OK);		
+		.statusCode(HttpStatus.SC_OK)
+		.body("tweets", hasSize(1));		
 		
 	}
 	

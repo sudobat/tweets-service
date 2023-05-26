@@ -8,5 +8,5 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class ListTweetDomain {
-	private List<TweetDomain> tweet;
+	private List<TweetDomain> tweets;
 }
