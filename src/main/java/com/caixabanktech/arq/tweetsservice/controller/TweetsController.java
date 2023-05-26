@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.caixabanktech.arq.tweetsservice.domain.ListTweetDomain;
 import com.caixabanktech.arq.tweetsservice.domain.TweetDomain;
 import com.caixabanktech.arq.tweetsservice.service.TweetService;
 
@@ -31,7 +32,7 @@ public class TweetsController {
     }
 
     @GetMapping
-    public ResponseEntity<List<TweetDomain>> getTweets(@RequestParam(name="page") Optional<Integer> page, @RequestParam("elementsPerPage") Optional<Integer> elementsPerPage){
+    public ResponseEntity<ListTweetDomain> getTweets(@RequestParam(name="page") Optional<Integer> page, @RequestParam("elementsPerPage") Optional<Integer> elementsPerPage){
 
     	int pageValue=0;
     	int elementsPerPageValue=10;
@@ -42,7 +43,10 @@ public class TweetsController {
     		elementsPerPageValue=elementsPerPage.get();
     	}
         List<TweetDomain> resultPage = tweetService.getTweets(pageValue, elementsPerPageValue);
-        ResponseEntity<List<TweetDomain>> tweetDomainResponseEntity = new ResponseEntity<List<TweetDomain>>(resultPage, null, HttpStatus.OK);
+        
+        ListTweetDomain newList = new ListTweetDomain(resultPage);
+        
+        ResponseEntity<ListTweetDomain> tweetDomainResponseEntity = new ResponseEntity<ListTweetDomain>(newList, null, HttpStatus.OK);
         return tweetDomainResponseEntity;
     }
 
