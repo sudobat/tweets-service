@@ -31,12 +31,12 @@ public class TweetServiceTest {
 		TweetDomain tweet=new TweetDomain("Tweet","PepeUpdate",new Date(),null);	
 		//Create
 		tweet=tweetService.createTweet(tweet);
-		tweet.setAuthor("PepeOtroUpdate");
+		tweet.setDesc("PepeOtroUpdate");
 		//Update
 		tweetService.updateTweet(tweet);
 		
 		TweetDomain tweet2=tweetService.getTweet(tweet.getId());
-		assertEquals("PepeOtroUpdate",tweet2.getAuthor());
+		assertEquals("PepeOtroUpdate",tweet2.getDesc());
 		
     }
 	

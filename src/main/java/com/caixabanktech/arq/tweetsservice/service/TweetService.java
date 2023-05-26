@@ -53,9 +53,15 @@ public class TweetService {
 	}
 	
 	public TweetDomain updateTweet(TweetDomain tweet) {
-		if (tweet.getCreatedAt()==null) tweet.setCreatedAt(new Date());
-		Tweet tweetResult = repo.save(mapper.map(tweet));
-		return mapper.map(tweetResult);
+		
+		Optional<Tweet> opt=repo.findById(tweet.getId());
+		if (!opt.isPresent()) {
+			return null;
+		}else {
+			Tweet tweetResult=opt.get();
+			tweetResult.setDesc(tweet.getDesc());
+			return mapper.map(repo.save(mapper.map(tweet)));
+		}
 	}
 	
 	/**

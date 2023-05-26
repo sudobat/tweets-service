@@ -71,7 +71,11 @@ public class TweetsController {
     public ResponseEntity<TweetDomain> updateTweet(@PathVariable String tweetId,@RequestBody TweetDomain tweet){
     	tweet.setId(UUID.fromString(tweetId));
     	TweetDomain tweetDomain = tweetService.updateTweet(tweet);
-        return ResponseEntity.status(HttpStatus.CREATED).body(tweetDomain);
+    	if (tweetDomain==null) {
+    		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    	}else {
+    		return ResponseEntity.status(HttpStatus.CREATED).body(tweetDomain);	
+    	}        
     }
 
     @DeleteMapping("/{tweetId}")
