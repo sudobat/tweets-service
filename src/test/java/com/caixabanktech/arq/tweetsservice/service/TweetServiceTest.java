@@ -36,8 +36,9 @@ public class TweetServiceTest {
 		tweetService.updateTweet(tweet);
 		
 		TweetDomain tweet2=tweetService.getTweet(tweet.getId());
-		assertEquals("PepeOtroUpdate",tweet2.getDesc());
-		
+		tweet.setAuthor(null);
+		assertEquals("PepeOtroUpdate",tweet2.getDesc());		
+		assertNotNull(tweet2.getAuthor());
     }
 	
 	@Test
